@@ -142,3 +142,58 @@ if __name__ == "__main__":
             shouldStopCheck[index] = state.calculate_expected_reward()
         
         i += 1
+
+
+------------------------------------------------------------------------
+
+MDP 2
+
+state_valuesi = {'pu':0, 'pf':0, 'ru':10, 'rf':10}
+state_values = {'pu':0, 'pf':0, 'ru':10, 'rf':10}
+pu={'s':{'pu':1}, 'a':{'pu':0.5, 'pf':0.5}}
+pf={'s':{'pu':0.5, 'rf':0.5}, 'a':{'pf':1}}
+ru={'s':{'ru':0.5, 'pu':0.5}, 'a':{'pu':0.5, 'pf':0.5}}
+rf={'s':{'ru':0.5,'rf':0.5}, 'a':{'pf':1}}
+j=0
+while(j<5):
+    sumS=0
+    sumA=0
+    for i in pu['s']:
+        sumS+=pu['s'][i]*state_values[i]
+    for i in pu['a']:
+        sumA+=pu['a'][i]*state_values[i]
+    puV=state_valuesi['pu']+0.9*max(sumS, sumA)
+    
+    
+    sumS=0
+    sumA=0
+    for i in pf['s']:
+        sumS+=pf['s'][i]*state_values[i]
+    for i in pf['a']:
+        sumA+=pf['a'][i]*state_values[i]
+    pfV= state_valuesi['pf']+0.9*max(sumS, sumA)
+    
+    
+    sumS=0
+    sumA=0
+    for i in ru['s']:
+        sumS+=ru['s'][i]*state_values[i]
+    for i in ru['a']:
+        sumA+=ru['a'][i]*state_values[i]
+    ruV=state_valuesi['ru']+0.9*max(sumS, sumA)
+    
+    
+    sumS=0
+    sumA=0
+    for i in rf['s']:
+        sumS+=rf['s'][i]*state_values[i]
+    for i in rf['a']:
+        sumA+=rf['a'][i]*state_values[i]
+    rfV = state_valuesi['rf']+0.9*max(sumS, sumA)
+    
+    state_values['pu']=puV
+    state_values['pf']=pfV
+    state_values['ru']=ruV
+    state_values['rf']=rfV
+    j+=1
+    print(state_values)
